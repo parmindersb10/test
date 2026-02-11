@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiple Video Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            text-align: center;
+            padding: 40px;
+        }
+        .upload-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="upload-box">
+        <h2>Upload Multiple Videos</h2>
+        <input type="file" id="videoInput" accept="video/*" multiple>
+        <div class="video-grid" id="videoPreview"></div>
+    </div>
+
+    <script>
+        const videoInput = document.getElementById('videoInput');
+        const videoPreview = document.getElementById('videoPreview');
+
+        videoInput.addEventListener('change', function () {
+            videoPreview.innerHTML = ""; // Clear previous previews
+
+            const files = this.files;
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+
+                if (file.type.startsWith("video/")) {
+                    const videoURL = URL.createObjectURL(file);
+
+                    const videoElement = document.createElement("video");
+                    videoElement.controls = true;
+                    videoElement.src = videoURL;
+
+                    videoPreview.appendChild(videoElement);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
